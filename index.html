@@ -85,7 +85,9 @@
             }
 
             #view-weekly,
+            #view-planner,
             #view-matrix,
+            #view-lp3,
             #view-semester,
             #view-info {
                 display: block !important;
@@ -135,7 +137,7 @@
                     </svg>
                 </button>
 
-                <button id="themeToggle"
+                <button id="themeToggle" onclick="toggleDarkMode()"
                     class="touch-target p-2 rounded-lg text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition flex items-center justify-center"
                     title="Ubah Mode Gelap / Terang">
                     <svg id="sunIcon" class="w-4 h-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -228,11 +230,15 @@
 
         <!-- Navigation Tabs -->
         <div class="border-b border-zinc-200 dark:border-zinc-800">
-            <nav class="flex space-x-2 sm:space-x-6 overflow-x-auto no-scrollbar pb-1 text-xs sm:text-sm"
+            <nav class="flex space-x-2 sm:space-x-4 overflow-x-auto no-scrollbar pb-1 text-xs sm:text-sm"
                 aria-label="Tabs">
                 <button onclick="switchTab('weekly')" id="tab-weekly"
                     class="tab-btn active whitespace-nowrap py-2.5 px-3 border-b-2 border-zinc-900 dark:border-zinc-100 font-semibold text-zinc-900 dark:text-zinc-100 transition">
                     Timeline Mingguan
+                </button>
+                <button onclick="switchTab('planner')" id="tab-planner"
+                    class="tab-btn whitespace-nowrap py-2.5 px-3 border-b-2 border-transparent font-medium text-zinc-500 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-200 transition">
+                    Panduan Online (Senin–Jumat)
                 </button>
                 <button onclick="switchTab('matrix')" id="tab-matrix"
                     class="tab-btn whitespace-nowrap py-2.5 px-3 border-b-2 border-transparent font-medium text-zinc-500 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-200 transition">
@@ -299,14 +305,304 @@
             </div>
         </section>
 
-        <!-- TAB 2: DAFTAR 8 MATA KULIAH (KRS) -->
+        <!-- TAB 2: PANDUAN ONLINE SENIN-JUMAT -->
+        <section id="view-planner" class="hidden space-y-4">
+            <div
+                class="bg-white dark:bg-[#121215] rounded-xl border border-zinc-200/90 dark:border-zinc-800 p-4 sm:p-5 shadow-sm space-y-4">
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span
+                            class="px-2 py-0.5 rounded text-[10px] font-bold font-mono bg-sky-100 dark:bg-sky-950 text-sky-800 dark:text-sky-300">ONLINE
+                            (SENIN – JUMAT)</span>
+                        <h3 class="text-sm sm:text-base font-semibold text-zinc-900 dark:text-zinc-100">Jadwal Harian
+                            E-Learning (Mentari LMS)</h3>
+                    </div>
+                    <p class="text-[11px] sm:text-xs text-zinc-500 dark:text-zinc-400 mt-1">Jadwal pembagian mata kuliah
+                        harian agar belajar online terarah, santai sepulang kerja, dan tugas tidak menumpuk di akhir
+                        pekan.</p>
+                </div>
+
+                <!-- Toggle Pill between Ganjil & Genap Daily Schedule -->
+                <div class="flex items-center gap-2 p-1 bg-zinc-100 dark:bg-zinc-900 rounded-lg w-fit text-xs">
+                    <button id="plannerBtnGanjil" onclick="togglePlannerWeek('ganjil')"
+                        class="px-3 py-1.5 rounded-md font-semibold bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 shadow-sm transition">
+                        Pekan Ganjil (Shift 2 Online)
+                    </button>
+                    <button id="plannerBtnGenap" onclick="togglePlannerWeek('genap')"
+                        class="px-3 py-1.5 rounded-md font-medium text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200 transition">
+                        Pekan Genap (Shift 1 Online)
+                    </button>
+                </div>
+
+                <!-- Schedule Container: Pekan Ganjil -->
+                <div id="plannerGanjilContent" class="space-y-3">
+                    <div
+                        class="p-3 bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-200/70 dark:border-emerald-800/40 rounded-lg text-xs text-emerald-800 dark:text-emerald-300">
+                        <strong>Fokus Pekan Ganjil:</strong> Pada hari Sabtu kamu masuk Tatap Muka Shift 1 (Arsikom,
+                        Logika, Alpro, Kalkulus). Hari <strong>Senin–Jumat</strong> di bawah ini dialokasikan untuk 4
+                        mata kuliah <strong>Shift 2 (2 SKS)</strong> di Mentari LMS:
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
+                        <!-- Senin -->
+                        <div
+                            class="p-3 rounded-lg bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200/80 dark:border-zinc-800 flex flex-col justify-between space-y-2">
+                            <div>
+                                <div class="flex items-center justify-between">
+                                    <span
+                                        class="font-bold text-xs text-zinc-900 dark:text-zinc-100 font-mono">SENIN</span>
+                                    <span class="text-[10px] font-mono text-zinc-400">Hari 1</span>
+                                </div>
+                                <div class="mt-2">
+                                    <span
+                                        class="text-[10px] font-bold text-sky-700 dark:text-sky-400 uppercase">26PAM0010</span>
+                                    <h4 class="font-semibold text-xs text-zinc-900 dark:text-zinc-100 leading-snug">
+                                        Basic English</h4>
+                                    <p class="text-[11px] text-zinc-500 mt-1">Dosen: Pari Purnaningsih, M.Pd.</p>
+                                </div>
+                            </div>
+                            <div
+                                class="pt-2 border-t border-zinc-200/60 dark:border-zinc-800 text-[11px] text-zinc-600 dark:text-zinc-400">
+                                📝 <em>Target:</em> Baca modul unit pekan ini, pelajari grammar/vocab IT, & isi forum.
+                            </div>
+                        </div>
+
+                        <!-- Selasa -->
+                        <div
+                            class="p-3 rounded-lg bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200/80 dark:border-zinc-800 flex flex-col justify-between space-y-2">
+                            <div>
+                                <div class="flex items-center justify-between">
+                                    <span
+                                        class="font-bold text-xs text-zinc-900 dark:text-zinc-100 font-mono">SELASA</span>
+                                    <span class="text-[10px] font-mono text-zinc-400">Hari 2</span>
+                                </div>
+                                <div class="mt-2">
+                                    <span
+                                        class="text-[10px] font-bold text-sky-700 dark:text-sky-400 uppercase">26TIF0005</span>
+                                    <h4 class="font-semibold text-xs text-zinc-900 dark:text-zinc-100 leading-snug">
+                                        Pengantar TI</h4>
+                                    <p class="text-[11px] text-zinc-500 mt-1">Dosen: Wiwin Winarti, M.Kom.</p>
+                                </div>
+                            </div>
+                            <div
+                                class="pt-2 border-t border-zinc-200/60 dark:border-zinc-800 text-[11px] text-zinc-600 dark:text-zinc-400">
+                                📝 <em>Target:</em> Download slide presentasi, baca rangkuman topik hardware/cloud.
+                            </div>
+                        </div>
+
+                        <!-- Rabu -->
+                        <div
+                            class="p-3 rounded-lg bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200/80 dark:border-zinc-800 flex flex-col justify-between space-y-2">
+                            <div>
+                                <div class="flex items-center justify-between">
+                                    <span
+                                        class="font-bold text-xs text-zinc-900 dark:text-zinc-100 font-mono">RABU</span>
+                                    <span class="text-[10px] font-mono text-zinc-400">Hari 3</span>
+                                </div>
+                                <div class="mt-2">
+                                    <span
+                                        class="text-[10px] font-bold text-sky-700 dark:text-sky-400 uppercase">26PAM0009</span>
+                                    <h4 class="font-semibold text-xs text-zinc-900 dark:text-zinc-100 leading-snug">
+                                        Pancasila</h4>
+                                    <p class="text-[11px] text-zinc-500 mt-1">Dosen: A. Munawaruzaman, M.Si.</p>
+                                </div>
+                            </div>
+                            <div
+                                class="pt-2 border-t border-zinc-200/60 dark:border-zinc-800 text-[11px] text-zinc-600 dark:text-zinc-400">
+                                📝 <em>Target:</em> Tanggapi topik diskusi nilai kebangsaan / etika profesi di Mentari.
+                            </div>
+                        </div>
+
+                        <!-- Kamis -->
+                        <div
+                            class="p-3 rounded-lg bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200/80 dark:border-zinc-800 flex flex-col justify-between space-y-2">
+                            <div>
+                                <div class="flex items-center justify-between">
+                                    <span
+                                        class="font-bold text-xs text-zinc-900 dark:text-zinc-100 font-mono">KAMIS</span>
+                                    <span class="text-[10px] font-mono text-zinc-400">Hari 4</span>
+                                </div>
+                                <div class="mt-2">
+                                    <span
+                                        class="text-[10px] font-bold text-sky-700 dark:text-sky-400 uppercase">26PAM0001</span>
+                                    <h4 class="font-semibold text-xs text-zinc-900 dark:text-zinc-100 leading-snug">
+                                        Agama Islam</h4>
+                                    <p class="text-[11px] text-zinc-500 mt-1">Dosen: Dr. Ahmad Ari Masyhuri</p>
+                                </div>
+                            </div>
+                            <div
+                                class="pt-2 border-t border-zinc-200/60 dark:border-zinc-800 text-[11px] text-zinc-600 dark:text-zinc-400">
+                                📝 <em>Target:</em> Baca modul keislaman & integrasi sains, balas forum mingguan.
+                            </div>
+                        </div>
+
+                        <!-- Jumat -->
+                        <div
+                            class="p-3 rounded-lg bg-amber-50/40 dark:bg-amber-950/20 border border-amber-200/80 dark:border-amber-900/40 flex flex-col justify-between space-y-2">
+                            <div>
+                                <div class="flex items-center justify-between">
+                                    <span
+                                        class="font-bold text-xs text-amber-800 dark:text-amber-300 font-mono">JUMAT</span>
+                                    <span class="text-[10px] font-mono text-amber-600">Review</span>
+                                </div>
+                                <div class="mt-2">
+                                    <span
+                                        class="text-[10px] font-bold text-amber-700 dark:text-amber-400 uppercase">CLOSING
+                                        PERKULIAHAN</span>
+                                    <h4 class="font-semibold text-xs text-zinc-900 dark:text-zinc-100 leading-snug">
+                                        Submit Kuis & Tugas</h4>
+                                    <p class="text-[11px] text-zinc-500 mt-1">Batas Waktu: 23.59 WIB</p>
+                                </div>
+                            </div>
+                            <div
+                                class="pt-2 border-t border-amber-200/60 dark:border-amber-800/40 text-[11px] text-zinc-600 dark:text-zinc-400">
+                                ✅ <em>Target:</em> Pastikan seluruh tugas 4 matkul tersubmit & siapkan fisik untuk Sabtu
+                                offline.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Schedule Container: Pekan Genap -->
+                <div id="plannerGenapContent" class="hidden space-y-3">
+                    <div
+                        class="p-3 bg-sky-50/50 dark:bg-sky-950/20 border border-sky-200/70 dark:border-sky-800/40 rounded-lg text-xs text-sky-800 dark:text-sky-300">
+                        <strong>Fokus Pekan Genap:</strong> Pada hari Sabtu kamu masuk Tatap Muka Shift 2 (English, PTI,
+                        Pancasila, Agama). Hari <strong>Senin–Jumat</strong> di bawah ini dialokasikan untuk 4 mata
+                        kuliah <strong>Shift 1 (3 SKS Sesi Daring LP3)</strong> di Mentari LMS:
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
+                        <!-- Senin -->
+                        <div
+                            class="p-3 rounded-lg bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200/80 dark:border-zinc-800 flex flex-col justify-between space-y-2">
+                            <div>
+                                <div class="flex items-center justify-between">
+                                    <span
+                                        class="font-bold text-xs text-zinc-900 dark:text-zinc-100 font-mono">SENIN</span>
+                                    <span class="text-[10px] font-mono text-zinc-400">Hari 1</span>
+                                </div>
+                                <div class="mt-2">
+                                    <span
+                                        class="text-[10px] font-bold text-sky-700 dark:text-sky-400 uppercase">26TIF0002</span>
+                                    <h4 class="font-semibold text-xs text-zinc-900 dark:text-zinc-100 leading-snug">
+                                        Arsikom</h4>
+                                    <p class="text-[11px] text-zinc-500 mt-1">Dosen: Hadi Zakaria, M.Kom.</p>
+                                </div>
+                            </div>
+                            <div
+                                class="pt-2 border-t border-zinc-200/60 dark:border-zinc-800 text-[11px] text-zinc-600 dark:text-zinc-400">
+                                📝 <em>Target:</em> Pelajari materi biner/arsitektur CPU & kerjakan latihan modul.
+                            </div>
+                        </div>
+
+                        <!-- Selasa -->
+                        <div
+                            class="p-3 rounded-lg bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200/80 dark:border-zinc-800 flex flex-col justify-between space-y-2">
+                            <div>
+                                <div class="flex items-center justify-between">
+                                    <span
+                                        class="font-bold text-xs text-zinc-900 dark:text-zinc-100 font-mono">SELASA</span>
+                                    <span class="text-[10px] font-mono text-zinc-400">Hari 2</span>
+                                </div>
+                                <div class="mt-2">
+                                    <span
+                                        class="text-[10px] font-bold text-sky-700 dark:text-sky-400 uppercase">26TIF0004</span>
+                                    <h4 class="font-semibold text-xs text-zinc-900 dark:text-zinc-100 leading-snug">
+                                        Logika Informatika</h4>
+                                    <p class="text-[11px] text-zinc-500 mt-1">Dosen: Zurnan Alfian, M.Kom.</p>
+                                </div>
+                            </div>
+                            <div
+                                class="pt-2 border-t border-zinc-200/60 dark:border-zinc-800 text-[11px] text-zinc-600 dark:text-zinc-400">
+                                📝 <em>Target:</em> Latihan tabel kebenaran / proposisi logika di forum Mentari.
+                            </div>
+                        </div>
+
+                        <!-- Rabu -->
+                        <div
+                            class="p-3 rounded-lg bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200/80 dark:border-zinc-800 flex flex-col justify-between space-y-2">
+                            <div>
+                                <div class="flex items-center justify-between">
+                                    <span
+                                        class="font-bold text-xs text-zinc-900 dark:text-zinc-100 font-mono">RABU</span>
+                                    <span class="text-[10px] font-mono text-zinc-400">Hari 3</span>
+                                </div>
+                                <div class="mt-2">
+                                    <span
+                                        class="text-[10px] font-bold text-sky-700 dark:text-sky-400 uppercase">26TIF0001</span>
+                                    <h4 class="font-semibold text-xs text-zinc-900 dark:text-zinc-100 leading-snug">
+                                        Algoritma & Pemrograman</h4>
+                                    <p class="text-[11px] text-zinc-500 mt-1">Dosen: Munawaroh, M.Kom.</p>
+                                </div>
+                            </div>
+                            <div
+                                class="pt-2 border-t border-zinc-200/60 dark:border-zinc-800 text-[11px] text-zinc-600 dark:text-zinc-400">
+                                📝 <em>Target:</em> Latihan coding/pseudocode dasar & upload jawaban ke LMS.
+                            </div>
+                        </div>
+
+                        <!-- Kamis -->
+                        <div
+                            class="p-3 rounded-lg bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200/80 dark:border-zinc-800 flex flex-col justify-between space-y-2">
+                            <div>
+                                <div class="flex items-center justify-between">
+                                    <span
+                                        class="font-bold text-xs text-zinc-900 dark:text-zinc-100 font-mono">KAMIS</span>
+                                    <span class="text-[10px] font-mono text-zinc-400">Hari 4</span>
+                                </div>
+                                <div class="mt-2">
+                                    <span
+                                        class="text-[10px] font-bold text-sky-700 dark:text-sky-400 uppercase">26TIF0003</span>
+                                    <h4 class="font-semibold text-xs text-zinc-900 dark:text-zinc-100 leading-snug">
+                                        Kalkulus</h4>
+                                    <p class="text-[11px] text-zinc-500 mt-1">Dosen: Herwis Gultom, M.Kom.</p>
+                                </div>
+                            </div>
+                            <div
+                                class="pt-2 border-t border-zinc-200/60 dark:border-zinc-800 text-[11px] text-zinc-600 dark:text-zinc-400">
+                                📝 <em>Target:</em> Kerjakan latihan soal matematika komputasi di buku catatan/LMS.
+                            </div>
+                        </div>
+
+                        <!-- Jumat -->
+                        <div
+                            class="p-3 rounded-lg bg-amber-50/40 dark:bg-amber-950/20 border border-amber-200/80 dark:border-amber-900/40 flex flex-col justify-between space-y-2">
+                            <div>
+                                <div class="flex items-center justify-between">
+                                    <span
+                                        class="font-bold text-xs text-amber-800 dark:text-amber-300 font-mono">JUMAT</span>
+                                    <span class="text-[10px] font-mono text-amber-600">Review</span>
+                                </div>
+                                <div class="mt-2">
+                                    <span
+                                        class="text-[10px] font-bold text-amber-700 dark:text-amber-400 uppercase">CLOSING
+                                        DARING LP3</span>
+                                    <h4 class="font-semibold text-xs text-zinc-900 dark:text-zinc-100 leading-snug">
+                                        Submit Tugas & Kuis</h4>
+                                    <p class="text-[11px] text-zinc-500 mt-1">Batas Waktu: 23.59 WIB</p>
+                                </div>
+                            </div>
+                            <div
+                                class="pt-2 border-t border-amber-200/60 dark:border-amber-800/40 text-[11px] text-zinc-600 dark:text-zinc-400">
+                                ✅ <em>Target:</em> Periksa kembali semua jawaban dan pastikan tidak ada tugas Daring 3
+                                SKS yang tertinggal.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- TAB 3: DAFTAR 8 MATA KULIAH (KRS) -->
         <section id="view-matrix" class="hidden space-y-4">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
                     <h3 class="text-sm sm:text-base font-semibold text-zinc-900 dark:text-zinc-100">Daftar Rencana Studi
                         (KRS) — 01TPLE010</h3>
                     <p class="text-[11px] sm:text-xs text-zinc-500 dark:text-zinc-400">Total 20 SKS terbagi ke dalam 2
-                        Shift Perkuliahan (E-1 dan E-2)</p>
+                        Shift Perkuliahan (Shift 1 dan Shift 2)</p>
                 </div>
                 <div class="w-full sm:w-64">
                     <input type="text" id="krsSearchInput" onkeyup="filterKRS()" placeholder="Cari matkul / dosen..."
@@ -319,7 +615,7 @@
             </div>
         </section>
 
-        <!-- TAB 3: MATRIKS RESMI LP3 & SK REKTOR -->
+        <!-- TAB 4: MATRIKS RESMI LP3 & SK REKTOR -->
         <section id="view-lp3" class="hidden space-y-4">
             <div
                 class="bg-white dark:bg-[#121215] rounded-xl border border-zinc-200/90 dark:border-zinc-800 p-4 sm:p-5 shadow-sm space-y-4">
@@ -381,7 +677,7 @@
             </div>
         </section>
 
-        <!-- TAB 4: KALENDER LENGKAP 16 PEKAN -->
+        <!-- TAB 5: KALENDER LENGKAP 16 PEKAN -->
         <section id="view-semester" class="hidden space-y-4">
             <div
                 class="bg-white dark:bg-[#121215] rounded-xl border border-zinc-200/90 dark:border-zinc-800 p-4 sm:p-5 shadow-sm">
@@ -431,7 +727,7 @@
             </div>
         </section>
 
-        <!-- TAB 5: INFO KAMPUS & BATAS PEMBAYARAN -->
+        <!-- TAB 6: INFO KAMPUS & BATAS PEMBAYARAN -->
         <section id="view-info" class="hidden space-y-4">
 
             <!-- Deadline Pembayaran Card (From SK Rektor) -->
@@ -554,12 +850,13 @@
         <div class="max-w-6xl mx-auto px-4">
             <p class="font-mono text-[11px] sm:text-xs">Universitas Pamulang • Teknik Informatika S-1 • Kelas 01TPLE010
             </p>
-            <p class="mt-0.5 text-[10px] text-zinc-400">Data bersumber dari Sistem Informasi Akademik My UNPAM.</p>
+            <p class="mt-0.5 text-[10px] text-zinc-400">Data bersumber dari Sistem Informasi Akademik My UNPAM & SK
+                Rektor 1694/A/UNPAM/KP/VII/2026.</p>
         </div>
     </footer>
 
     <script>
-        // 8 Core Courses Data
+        // 8 Core Courses Data (01TPLE010)
         const COURSES = [
             {
                 code: '26TIF0002',
@@ -651,7 +948,7 @@
             }
         ];
 
-        // Official 16-Week Schedule Data based on LP3 Schema & SK Rektor 1694/A/UNPAM/KP/VII/2026
+        // Official LP3 Schema Dataset
         const LP3_SCHEMA = [
             { pekanRoman: 'I', dateLuring: '31 Agu – 4 Sep 2026', dateDaring: '-', m2L: '1', m2D: '-', m3L: '1', m3D: '-', note: 'Awal Perkuliahan Gasal 2026/2027 (Sabtu 5 Sep: Perdana Tatap Muka Shift 1 di V.111)' },
             { pekanRoman: 'II', dateLuring: '7 – 11 Sep 2026', dateDaring: '7 – 11 Sep 2026', m2L: '2', m2D: '-', m3L: '2', m3D: '3', note: 'Sabtu 12 Sep: Tatap Muka Shift 2 • Periode PKKMB Online Mentari (7–19 Sep)' },
@@ -671,102 +968,85 @@
             { pekanRoman: 'XVI', dateLuring: '14 – 19 Des 2026', dateDaring: '-', m2L: 'UAS', m2D: '-', m3L: 'UAS', m3D: '-', isExam: true, note: 'Pekan Ujian Akhir Semester (UAS) Resmi Seluruh Program Reguler (Sabtu 19 Des)' }
         ];
 
-        // Saturdays 16 Pekan for Reg CS
+        // Saturdays Data for Reg CS (16 Pekan)
         const SATURDAYS_DATA = [
-            { weekNum: 1, pekanLabel: 'Pekan I', date: '05 Sep 2026', type: 'ganjil', note: 'Perdana Kuliah Tatap Muka di V.111 (Shift 1)' },
-            { weekNum: 2, pekanLabel: 'Pekan II', date: '12 Sep 2026', type: 'genap', note: 'Tatap Muka Shift 2 (Ruang V.111) • Periode PKKMB Online Mentari' },
-            { weekNum: 3, pekanLabel: 'Pekan III', date: '19 Sep 2026', type: 'ganjil', note: 'Tatap Muka Shift 1 (Ruang V.111) • Hari Terakhir PKKMB Online' },
-            { weekNum: 4, pekanLabel: 'Pekan IV', date: '26 Sep 2026', type: 'genap', note: 'Tatap Muka Shift 2 (Ruang V.111)' },
-            { weekNum: 5, pekanLabel: 'Pekan V', date: '03 Okt 2026', type: 'ganjil', note: 'Tatap Muka Shift 1 (Ruang V.111)' },
-            { weekNum: 6, pekanLabel: 'Pekan VI', date: '10 Okt 2026', type: 'genap', note: 'Tatap Muka Shift 2 (Ruang V.111)' },
-            { weekNum: 7, pekanLabel: 'Pekan VII', date: '17 Okt 2026', type: 'ganjil', note: 'Tatap Muka Shift 1 (Review Pra-UTS) • Batas Bayar UTS: 15 Okt' },
-            { weekNum: 8, pekanLabel: 'Pekan VIII (UTS)', date: '24 Okt 2026', type: 'exam', label: 'Pekan UTS', note: 'Ujian Tengah Semester Resmi (Sesuai SK Rektor 19–24 Okt)' },
-            { weekNum: 9, pekanLabel: 'Pekan IX', date: '31 Okt 2026', type: 'genap', note: 'Tatap Muka Shift 2 (Awal Paruh Kedua Semester)' },
-            { weekNum: 10, pekanLabel: 'Pekan X', date: '07 Nov 2026', type: 'ganjil', note: 'Tatap Muka Shift 1 (Ruang V.111)' },
-            { weekNum: 11, pekanLabel: 'Pekan XI', date: '14 Nov 2026', type: 'genap', note: 'Tatap Muka Shift 2 (Ruang V.111)' },
-            { weekNum: 12, pekanLabel: 'Pekan XII', date: '21 Nov 2026', type: 'ganjil', note: 'Tatap Muka Shift 1 (Ruang V.111)' },
-            { weekNum: 13, pekanLabel: 'Pekan XIII', date: '28 Nov 2026', type: 'genap', note: 'Tatap Muka Shift 2 (Ruang V.111)' },
-            { weekNum: 14, pekanLabel: 'Pekan XIV', date: '05 Des 2026', type: 'ganjil', note: 'Tatap Muka Shift 1 • Batas Akhir Bayar UAS: 8 Des' },
-            { weekNum: 15, pekanLabel: 'Pekan XV', date: '12 Des 2026', type: 'genap', note: 'Tatap Muka Shift 2 (Pertemuan Terakhir Sebelum UAS)' },
-            { weekNum: 16, pekanLabel: 'Pekan XVI (UAS)', date: '19 Des 2026', type: 'exam', label: 'Pekan UAS', note: 'Ujian Akhir Semester Resmi (Sesuai SK Rektor 14–19 Des)' }
+            { weekNum: 1, pekanLabel: 'Pekan I', date: '05 Sep 2026', weekdaysRange: '31 Agu – 4 Sep 2026', type: 'ganjil', note: 'Perdana Kuliah Tatap Muka di V.111 (Shift 1)' },
+            { weekNum: 2, pekanLabel: 'Pekan II', date: '12 Sep 2026', weekdaysRange: '7 – 11 Sep 2026', type: 'genap', note: 'Tatap Muka Shift 2 (Ruang V.111) • Periode PKKMB Online Mentari' },
+            { weekNum: 3, pekanLabel: 'Pekan III', date: '19 Sep 2026', weekdaysRange: '14 – 18 Sep 2026', type: 'ganjil', note: 'Tatap Muka Shift 1 (Ruang V.111) • Hari Terakhir PKKMB Online' },
+            { weekNum: 4, pekanLabel: 'Pekan IV', date: '26 Sep 2026', weekdaysRange: '21 – 25 Sep 2026', type: 'genap', note: 'Tatap Muka Shift 2 (Ruang V.111)' },
+            { weekNum: 5, pekanLabel: 'Pekan V', date: '03 Okt 2026', weekdaysRange: '28 Sep – 2 Okt 2026', type: 'ganjil', note: 'Tatap Muka Shift 1 (Ruang V.111)' },
+            { weekNum: 6, pekanLabel: 'Pekan VI', date: '10 Okt 2026', weekdaysRange: '5 – 9 Okt 2026', type: 'genap', note: 'Tatap Muka Shift 2 (Ruang V.111)' },
+            { weekNum: 7, pekanLabel: 'Pekan VII', date: '17 Okt 2026', weekdaysRange: '12 – 16 Okt 2026', type: 'ganjil', note: 'Tatap Muka Shift 1 (Review Pra-UTS) • Batas Bayar UTS: 15 Okt' },
+            { weekNum: 8, pekanLabel: 'Pekan VIII (UTS)', date: '24 Okt 2026', weekdaysRange: '19 – 23 Okt 2026', type: 'exam', label: 'Pekan UTS', note: 'Ujian Tengah Semester Resmi (Sesuai SK Rektor 19–24 Okt)' },
+            { weekNum: 9, pekanLabel: 'Pekan IX', date: '31 Okt 2026', weekdaysRange: '26 – 30 Okt 2026', type: 'genap', note: 'Tatap Muka Shift 2 (Awal Paruh Kedua Semester)' },
+            { weekNum: 10, pekanLabel: 'Pekan X', date: '07 Nov 2026', weekdaysRange: '2 – 6 Nov 2026', type: 'ganjil', note: 'Tatap Muka Shift 1 (Ruang V.111)' },
+            { weekNum: 11, pekanLabel: 'Pekan XI', date: '14 Nov 2026', weekdaysRange: '9 – 13 Nov 2026', type: 'genap', note: 'Tatap Muka Shift 2 (Ruang V.111)' },
+            { weekNum: 12, pekanLabel: 'Pekan XII', date: '21 Nov 2026', weekdaysRange: '16 – 20 Nov 2026', type: 'ganjil', note: 'Tatap Muka Shift 1 (Ruang V.111)' },
+            { weekNum: 13, pekanLabel: 'Pekan XIII', date: '28 Nov 2026', weekdaysRange: '23 – 27 Nov 2026', type: 'genap', note: 'Tatap Muka Shift 2 (Ruang V.111)' },
+            { weekNum: 14, pekanLabel: 'Pekan XIV', date: '05 Des 2026', weekdaysRange: '30 Nov – 4 Des 2026', type: 'ganjil', note: 'Tatap Muka Shift 1 • Batas Akhir Bayar UAS: 8 Des' },
+            { weekNum: 15, pekanLabel: 'Pekan XV', date: '12 Des 2026', weekdaysRange: '7 – 11 Des 2026', type: 'genap', note: 'Tatap Muka Shift 2 (Pertemuan Terakhir Sebelum UAS)' },
+            { weekNum: 16, pekanLabel: 'Pekan XVI (UAS)', date: '19 Des 2026', weekdaysRange: '14 – 18 Des 2026', type: 'exam', label: 'Pekan UAS', note: 'Ujian Akhir Semester Resmi (Sesuai SK Rektor 14–19 Des)' }
         ];
 
         let currentWeekIndex = 0;
 
-        function initApp() {
-            setupTheme();
-            populateWeekSelect();
-            renderSelectedWeek();
-            renderKRSMatrix();
-            renderLP3Table();
-            renderSemesterTable();
-        }
-
-        function setupTheme() {
-            const themeToggle = document.getElementById('themeToggle');
-            const sunIcon = document.getElementById('sunIcon');
-            const moonIcon = document.getElementById('moonIcon');
-
-            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-            if (prefersDark) {
-                document.documentElement.classList.add('dark');
-                sunIcon.classList.remove('hidden');
-                moonIcon.classList.add('hidden');
-            }
-
-            themeToggle.addEventListener('click', () => {
-                const isDark = document.documentElement.classList.toggle('dark');
-                if (isDark) {
-                    sunIcon.classList.remove('hidden');
-                    moonIcon.classList.add('hidden');
-                } else {
-                    sunIcon.classList.add('hidden');
-                    moonIcon.classList.remove('hidden');
-                }
-            });
-        }
-
         function switchTab(tabId) {
-            const tabs = ['weekly', 'matrix', 'lp3', 'semester', 'info'];
+            const tabs = ['weekly', 'planner', 'matrix', 'lp3', 'semester', 'info'];
             tabs.forEach(t => {
                 const view = document.getElementById(`view-${t}`);
                 const btn = document.getElementById(`tab-${t}`);
-                if (t === tabId) {
-                    view.classList.remove('hidden');
-                    btn.className = 'tab-btn active whitespace-nowrap py-2.5 px-3 border-b-2 border-zinc-900 dark:border-zinc-100 font-semibold text-zinc-900 dark:text-zinc-100 transition';
-                } else {
-                    view.classList.add('hidden');
-                    btn.className = 'tab-btn whitespace-nowrap py-2.5 px-3 border-b-2 border-transparent font-medium text-zinc-500 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-200 transition';
+                if (view && btn) {
+                    if (t === tabId) {
+                        view.classList.remove('hidden');
+                        btn.className = 'tab-btn active whitespace-nowrap py-2.5 px-3 border-b-2 border-zinc-900 dark:border-zinc-100 font-semibold text-zinc-900 dark:text-zinc-100 transition';
+                    } else {
+                        view.classList.add('hidden');
+                        btn.className = 'tab-btn whitespace-nowrap py-2.5 px-3 border-b-2 border-transparent font-medium text-zinc-500 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-200 transition';
+                    }
                 }
             });
         }
 
-        function populateWeekSelect() {
-            const select = document.getElementById('weekSelect');
-            select.innerHTML = '';
-            SATURDAYS_DATA.forEach((w, idx) => {
-                const opt = document.createElement('option');
-                opt.value = idx;
-                opt.textContent = `${w.pekanLabel} (${w.date})`;
-                select.appendChild(opt);
-            });
+        function togglePlannerWeek(type) {
+            const ganjilContent = document.getElementById('plannerGanjilContent');
+            const genapContent = document.getElementById('plannerGenapContent');
+            const btnGanjil = document.getElementById('plannerBtnGanjil');
+            const btnGenap = document.getElementById('plannerBtnGenap');
+
+            if (!ganjilContent || !genapContent || !btnGanjil || !btnGenap) return;
+
+            if (type === 'ganjil') {
+                ganjilContent.classList.remove('hidden');
+                genapContent.classList.add('hidden');
+                btnGanjil.className = 'px-3 py-1.5 rounded-md font-semibold bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 shadow-sm transition';
+                btnGenap.className = 'px-3 py-1.5 rounded-md font-medium text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200 transition';
+            } else {
+                ganjilContent.classList.add('hidden');
+                genapContent.classList.remove('hidden');
+                btnGenap.className = 'px-3 py-1.5 rounded-md font-semibold bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 shadow-sm transition';
+                btnGanjil.className = 'px-3 py-1.5 rounded-md font-medium text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200 transition';
+            }
         }
 
         function renderSelectedWeek() {
             const select = document.getElementById('weekSelect');
-            currentWeekIndex = parseInt(select.value, 10);
+            if (!select) return;
+            currentWeekIndex = parseInt(select.value, 10) || 0;
             const week = SATURDAYS_DATA[currentWeekIndex];
+            const lp3Data = LP3_SCHEMA[currentWeekIndex];
             const statusBadge = document.getElementById('weekStatusBadge');
             const container = document.getElementById('scheduleTimelineContainer');
+
+            if (!week || !statusBadge || !container) return;
 
             if (week.type === 'ganjil') {
                 statusBadge.innerHTML = `
           <div class="text-left md:text-right">
             <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-semibold bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-              Shift 1: Tatap Muka (V.111)
+              Sabtu: Shift 1 Tatap Muka (V.111)
             </span>
-            <div class="text-[10px] text-zinc-400 mt-0.5 font-mono">Shift 2: Mandiri / Mentari LMS</div>
+            <div class="text-[10px] text-zinc-400 mt-0.5 font-mono">Senin–Jumat: Mandiri / Shift 2 di Mentari</div>
           </div>
         `;
             } else if (week.type === 'genap') {
@@ -774,9 +1054,9 @@
           <div class="text-left md:text-right">
             <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-semibold bg-sky-50 dark:bg-sky-950/40 text-sky-700 dark:text-sky-400 border border-sky-200 dark:border-sky-800">
               <span class="w-1.5 h-1.5 rounded-full bg-sky-500"></span>
-              Shift 2: Tatap Muka (V.111)
+              Sabtu: Shift 2 Tatap Muka (V.111)
             </span>
-            <div class="text-[10px] text-zinc-400 mt-0.5 font-mono">Shift 1: Mandiri / Mentari LMS</div>
+            <div class="text-[10px] text-zinc-400 mt-0.5 font-mono">Senin–Jumat: Sesi Daring 3 SKS di Mentari</div>
           </div>
         `;
             } else {
@@ -791,6 +1071,65 @@
         `;
             }
 
+            container.innerHTML = '';
+
+            // 1. Weekday Online Overview Card
+            const onlineCard = document.createElement('div');
+            onlineCard.className = 'p-3.5 sm:p-4 rounded-xl bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200/80 dark:border-zinc-800 shadow-sm space-y-2';
+
+            let onlineDetails = '';
+            if (week.type === 'ganjil') {
+                onlineDetails = `
+          <div class="text-xs text-zinc-600 dark:text-zinc-300">
+            <strong>Fokus E-Learning Pekan Ini:</strong> Pembelajaran mandiri & forum diskusi mata kuliah <strong>Shift 2 (2 SKS)</strong>: <em>Basic English, PTI, Pancasila, dan Agama Islam</em> di portal <a href="https://mentari.unpam.ac.id" target="_blank" class="underline text-sky-600 dark:text-sky-400">Mentari LMS</a>.
+          </div>
+        `;
+            } else if (week.type === 'genap') {
+                onlineDetails = `
+          <div class="text-xs text-zinc-600 dark:text-zinc-300">
+            <strong>Sesi Daring Resmi LP3 (Matkul 3 SKS):</strong> Pertemuan ekuivalen Daring ke-<strong>${lp3Data.m3D}</strong> di <a href="https://mentari.unpam.ac.id" target="_blank" class="underline text-sky-600 dark:text-sky-400">Mentari LMS</a> untuk mata kuliah: <em>Arsikom, Logika Informatika, Algoritma Pemrograman, dan Kalkulus</em>.
+          </div>
+        `;
+            } else {
+                onlineDetails = `
+          <div class="text-xs text-zinc-600 dark:text-zinc-300">
+            <strong>Pekan Ujian:</strong> Fokus belajar mandiri dan persiapan soal ujian sesuai arahan dosen.
+          </div>
+        `;
+            }
+
+            onlineCard.innerHTML = `
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 pb-2 border-b border-zinc-200/60 dark:border-zinc-800">
+          <div class="flex items-center gap-2">
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold font-mono bg-sky-100 dark:bg-sky-950 text-sky-800 dark:text-sky-300">💻 SENIN – JUMAT</span>
+            <span class="text-xs font-semibold text-zinc-900 dark:text-zinc-100">Rentang Daring: ${week.weekdaysRange}</span>
+          </div>
+          <span class="text-[10px] font-mono text-zinc-400">Mentari LMS (Asinkron / Bebas Jam Kerja)</span>
+        </div>
+        ${onlineDetails}
+      `;
+            container.appendChild(onlineCard);
+
+            // 2. Info Pekan Note
+            if (week.note) {
+                const noteEl = document.createElement('div');
+                noteEl.className = 'p-3 bg-white dark:bg-[#121215] border border-zinc-200/80 dark:border-zinc-800 rounded-lg text-xs text-zinc-700 dark:text-zinc-300 flex items-start gap-2';
+                noteEl.innerHTML = `<span class="font-bold text-zinc-900 dark:text-zinc-100 shrink-0">📌 Info Pekan:</span> <span>${week.note}</span>`;
+                container.appendChild(noteEl);
+            }
+
+            // 3. Saturday Slot Section Header
+            const satHeader = document.createElement('div');
+            satHeader.className = 'pt-2 flex items-center justify-between';
+            satHeader.innerHTML = `
+        <div class="flex items-center gap-2">
+          <span class="px-2 py-0.5 rounded text-[10px] font-bold font-mono bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300">🏛️ HARI SABTU</span>
+          <h4 class="text-xs sm:text-sm font-bold text-zinc-900 dark:text-zinc-100">Jadwal Kuliah Tatap Muka & Sesi Hari Sabtu (${week.date})</h4>
+        </div>
+        <span class="text-[11px] font-mono text-zinc-500">Ruang V.111</span>
+      `;
+            container.appendChild(satHeader);
+
             const slots = [
                 { time: '07.40 – 09.20 WIB', mk1: COURSES[0], mk2: COURSES[1] },
                 { time: '09.20 – 11.00 WIB', mk1: COURSES[2], mk2: null },
@@ -798,15 +1137,6 @@
                 { time: '13.50 – 15.30 WIB', mk1: COURSES[4], mk2: COURSES[5] },
                 { time: '16.00 – 17.40 WIB', mk1: COURSES[6], mk2: COURSES[7] }
             ];
-
-            container.innerHTML = '';
-
-            if (week.note) {
-                const noteEl = document.createElement('div');
-                noteEl.className = 'p-3 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800 rounded-lg text-xs text-zinc-700 dark:text-zinc-300 flex items-start gap-2';
-                noteEl.innerHTML = `<span class="font-bold text-zinc-900 dark:text-zinc-100 shrink-0">📌 Info Pekan:</span> <span>${week.note}</span>`;
-                container.appendChild(noteEl);
-            }
 
             slots.forEach(slot => {
                 const isOfflineShift1 = (week.type === 'ganjil');
@@ -896,6 +1226,7 @@
 
         function renderKRSMatrix() {
             const grid = document.getElementById('krsGrid');
+            if (!grid) return;
             grid.innerHTML = '';
 
             COURSES.forEach(course => {
@@ -944,16 +1275,17 @@
         }
 
         function filterKRS() {
-            const query = document.getElementById('krsSearchInput').value.toLowerCase();
+            const query = (document.getElementById('krsSearchInput')?.value || '').toLowerCase();
             const cards = document.querySelectorAll('.course-card');
             cards.forEach(c => {
-                const text = c.getAttribute('data-search');
+                const text = c.getAttribute('data-search') || '';
                 c.style.display = text.includes(query) ? 'flex' : 'none';
             });
         }
 
         function renderLP3Table() {
             const tbody = document.getElementById('lp3TableBody');
+            if (!tbody) return;
             tbody.innerHTML = '';
 
             LP3_SCHEMA.forEach(item => {
@@ -979,6 +1311,7 @@
         function renderSemesterTable() {
             const tbody = document.getElementById('semesterTableBody');
             const mobileList = document.getElementById('semesterMobileList');
+            if (!tbody || !mobileList) return;
             tbody.innerHTML = '';
             mobileList.innerHTML = '';
 
@@ -1047,6 +1380,7 @@
 
         function showToast(message) {
             const toast = document.getElementById('toastNotification');
+            if (!toast) return;
             toast.textContent = message;
             toast.classList.remove('opacity-0', 'pointer-events-none');
             toast.classList.add('opacity-100');
@@ -1054,6 +1388,58 @@
                 toast.classList.remove('opacity-100');
                 toast.classList.add('opacity-0', 'pointer-events-none');
             }, 2500);
+        }
+
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            const sunIcon = document.getElementById('sunIcon');
+            const moonIcon = document.getElementById('moonIcon');
+            const isDark = html.classList.toggle('dark');
+            if (sunIcon && moonIcon) {
+                sunIcon.classList.toggle('hidden', !isDark);
+                moonIcon.classList.toggle('hidden', isDark);
+            }
+            try {
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            } catch (e) { }
+        }
+
+        function initApp() {
+            // 1. Initialize Theme
+            try {
+                const savedTheme = localStorage.getItem('theme');
+                const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                const shouldBeDark = savedTheme === 'dark' || (!savedTheme && systemPrefersDark);
+                if (shouldBeDark) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+                const sunIcon = document.getElementById('sunIcon');
+                const moonIcon = document.getElementById('moonIcon');
+                if (sunIcon && moonIcon) {
+                    sunIcon.classList.toggle('hidden', !shouldBeDark);
+                    moonIcon.classList.toggle('hidden', shouldBeDark);
+                }
+            } catch (e) { }
+
+            // 2. Populate Week Dropdown
+            const select = document.getElementById('weekSelect');
+            if (select) {
+                select.innerHTML = '';
+                SATURDAYS_DATA.forEach((w, idx) => {
+                    const opt = document.createElement('option');
+                    opt.value = idx;
+                    opt.textContent = `${w.pekanLabel} — ${w.date} (${w.type === 'ganjil' ? 'Shift 1' : w.type === 'genap' ? 'Shift 2' : 'Ujian'})`;
+                    select.appendChild(opt);
+                });
+            }
+
+            // 3. Render all sections
+            renderSelectedWeek();
+            renderKRSMatrix();
+            renderLP3Table();
+            renderSemesterTable();
         }
 
         window.onload = initApp;
